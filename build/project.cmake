@@ -1,16 +1,19 @@
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 
-#if (UNIX)
-	add_compile_options(-Wall -Wextra -Weffc++)
-#else ()
-#	add_compile_options(/W4)
-#endif ()
+if (UNIX)
+	add_compile_options(-Wall -Wextra -Weffc++ -std=c++17)
+else ()
+	add_compile_options(/W4 /std:c++17)
+endif ()
 
 set(SOURCES
     src/main.cpp)
 set(INCLUDES
 	include/3D/Point.hpp
-	include/3D/Point.inl)
+	include/3D/Point.inl
+	include/3D/Vector.hpp
+	include/3D/Vector.inl
+)
 
 add_executable(3D-Engine
 	${SOURCES}
