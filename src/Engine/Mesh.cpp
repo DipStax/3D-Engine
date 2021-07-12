@@ -8,7 +8,7 @@
 #include "Engine/Mesh.hpp"
 
 #include <fstream>
-#include <strstream>
+#include <sstream>
 
 namespace Engine {
 
@@ -17,12 +17,12 @@ namespace Engine {
         m_tri.clear();
     }
 
-    Triangle &Mesh::at(size_t _n)
+    const Triangle &Mesh::at(std::size_t _n) const
     {
         return m_tri.at(_n);
     }
 
-    Triangle &Mesh::operator[](size_t _n)
+    Triangle &Mesh::operator[](std::size_t _n)
     {
         return at(_n);
     }
@@ -30,7 +30,7 @@ namespace Engine {
     void Mesh::load(const std::string &_path)
     {
         std::ifstream file(_path);
-        std::strstream stream;
+        std::istringstream stream;
         std::string line;
         std::string trash;
         std::vector<d3::Pointf> vec;
@@ -41,7 +41,7 @@ namespace Engine {
             throw ("[Mesh::load]: (_path) is inaccessible: " + _path);
         while (!file.eof()) {
             std::getline(file, line);
-            stream << line;
+            stream.str(line);
 
             if (line[0] == 'v') {
                 stream >> trash >> tmp.x >> tmp.y >> tmp.z;

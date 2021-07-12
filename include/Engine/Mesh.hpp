@@ -27,8 +27,8 @@ namespace Engine {
 
             void clear();
 
-            Triangle &at(size_t _n);
-            Triangle &operator[](size_t _n);
+            const Triangle &at(std::size_t _n) const;
+            Triangle &operator[](std::size_t _n);
 
             void load(const std::string &_obj);
             void setModel(Model _model);
