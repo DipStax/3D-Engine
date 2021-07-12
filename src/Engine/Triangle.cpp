@@ -5,8 +5,6 @@
 ** Triangle.hpp
 */
 
-#pragma once
-
 #include "Engine/Triangle.hpp"
 
 namespace Engine {
@@ -18,7 +16,7 @@ namespace Engine {
         m_pt[2] = _thd;
     }
 
-    d3::Pointf Triangle::operator[](size_t _n)
+    d3::Pointf Triangle::operator[](std::size_t _n)
     {
         return m_pt[_n];
     }
