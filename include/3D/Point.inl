@@ -23,6 +23,15 @@ namespace d3 {
     }
 
     template<typename T>
+    Point<T> &Point<T>::operator=(const Point<T> &_pt)
+    {
+        x = _pt.x;
+        y = _pt.y;
+        z = _pt.z;
+        return *this;
+    }
+
+    template<typename T>
     void Point<T>::setPosition(const Point<T> &_pt)
     {
         x = _pt.x;

@@ -18,8 +18,9 @@ namespace d3 {
             Point() = default;
             Point(const T &_x, const T &_y, const T &_z);
             Point(const Point<T> &_pt);
-
             virtual ~Point() = default;
+
+            Point<T> &operator=(const Point<T> &_pt);
 
             virtual void setPosition(const Point<T> &_pt);
             virtual void setPosition(const T &_x, const T &_y, const T &_z);
