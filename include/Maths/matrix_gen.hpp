@@ -8,7 +8,7 @@
 #pragma once
 
 #include "Matrix.hpp"
-#include "Vector.hpp"
+#include "3D/Vector.hpp"
 
 namespace Maths {
 
