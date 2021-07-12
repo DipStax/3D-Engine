@@ -7,12 +7,23 @@ else ()
 endif ()
 
 set(SOURCES
-    src/main.cpp)
+	src/Engine/Camera.cpp
+	src/Engine/Mesh.cpp
+	src/Engine/Triangle.cpp
+	src/Maths/Matrix_gen.cpp
+	src/main.cpp
+	)
 set(INCLUDES
 	include/3D/Point.hpp
 	include/3D/Point.inl
 	include/3D/Vector.hpp
 	include/3D/Vector.inl
+	include/Engine/Camera.hpp
+	include/Engine/Mesh.hpp
+	include/Engine/Triangle.hpp
+	include/Maths/Matrix_gen.hpp
+	include/Maths/Matrix.hpp
+	include/Maths/Matrix.inl
 )
 
 add_executable(3D-Engine
