@@ -28,9 +28,17 @@ namespace d3 {
     }
 
     template<typename T>
+    Vector<T>::Vector(const Point<T> &_pt)
+    {
+        x = _pt.x;
+        y = _pt.y;
+        z = _pt.z;
+    }
+
+    template<typename T>
     float Vector<T>::lenght() const
     {
-        return std::sqrtf(dotProduct(*this));
+        return std::sqrt(dotProduct(*this));
     }
 
     template<typename T>
@@ -51,9 +59,9 @@ namespace d3 {
     }
 
     template<typename T>
-    Vector<T> Vector<T>::dotProduct(const Vector<T> &_vec) const
+    T Vector<T>::dotProduct(const Vector<T> &_vec) const
     {
-        return (*this) * _vec;
+        return x * _vec.x + y * _vec.y + z * _vec.z;
     }
 }
 
@@ -76,7 +84,7 @@ d3::Vector<T> operator+(const d3::Vector<T> &_vec, const T &_n)
     vec.x = _vec.x + _n;
     vec.y = _vec.y + _n;
     vec.z = _vec.z + _n;
-    return
+    return vec;
 }
 
 template<typename T>
@@ -98,7 +106,7 @@ d3::Vector<T> operator-(const d3::Vector<T> &_vec, const T &_n)
     vec.x = _vec.x - _n;
     vec.y = _vec.y - _n;
     vec.z = _vec.z - _n;
-    return
+    return vec;
 }
 
 template<typename T>
@@ -119,7 +127,7 @@ d3::Vector<T> operator*(const d3::Vector<T> &_vec, const T &_n)
     vec.x = _vec.x * _n;
     vec.y = _vec.y * _n;
     vec.z = _vec.z * _n;
-    return
+    return vec;
 }
 
 template<typename T>
@@ -141,5 +149,5 @@ d3::Vector<T> operator/(const d3::Vector<T> &_vec, const T &_n)
     vec.x = _vec.x / _n;
     vec.y = _vec.y / _n;
     vec.z = _vec.z / _n;
-    return
+    return vec;
 }

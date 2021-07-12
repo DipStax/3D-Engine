@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <type_traits>
+#include "Point.hpp"
 
 namespace d3 {
 
@@ -18,6 +18,7 @@ namespace d3 {
             Vector() = default;
             Vector(const T &_x, const T &_y, const T &_z);
             Vector(const Vector<T> &_vec);
+            Vector(const Point<T> &_pt);
 
             virtual ~Vector() = default;
 
@@ -25,8 +26,9 @@ namespace d3 {
             [[nodiscard]] Vector<T> normalise() const;
 
             [[nodiscard]] Vector<T> crossProduct(const Vector<T> &_vec) const;
-            [[nodiscard]] Vector<T> dotProduct(const Vector<T> &_vec) const;
+            [[nodiscard]] T dotProduct(const Vector<T> &_vec) const;
 
+            T w = 0;
             T x = 0;
             T y = 0;
             T z = 0;
