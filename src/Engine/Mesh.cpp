@@ -24,7 +24,7 @@ namespace Engine {
 
     Triangle &Mesh::operator[](std::size_t _n)
     {
-        return at(_n);
+        return m_tri[_n];
     }
 
     void Mesh::load(const std::string &_path)
@@ -107,5 +107,16 @@ namespace Engine {
         m_tri.emplace_back(d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 0.5, 1, 0.5 }, d3::Pointf{ 0, 0, 0 });
         m_tri.emplace_back(d3::Pointf{ 1, 0, 1 }, d3::Pointf{ 0.5, 1, 0.5 }, d3::Pointf{ 0, 0, 1 });
         m_tri.emplace_back(d3::Pointf{ 1, 0, 0 }, d3::Pointf{ 0.5, 1, 0.5 }, d3::Pointf{ 1, 0, 1 });
+    }
+
+    void Mesh::draw(sf::RenderTarget& _target, sf::RenderStates _states) const
+    {
+        for (auto &_tri : m_tri)
+            _target.draw(_tri, _states);
+    }
+
+    std::vector<Triangle> &Mesh::getTriangle()
+    {
+        return m_tri;
     }
 }
