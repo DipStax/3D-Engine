@@ -23,13 +23,14 @@ namespace Maths {
             void identity();
             void reset(const T &_val = 0);
 
-            std::vector<T> &operator[](std::size_t _n);
-            const std::vector<T> &at(std::size_t _n) const;
-            std::size_t getHeight() const;
-            std::size_t getWidth() const;
+            [[nodiscard]] std::vector<T> &operator[](std::size_t _n);
+            [[nodiscard]] const std::vector<T> &at(std::size_t _n) const;
+            [[nodiscard]] std::size_t getHeight() const;
+            [[nodiscard]] std::size_t getWidth() const;
 
-            bool resize(const std::size_t _height, const std::size_t _width);
-            bool checkIntegrity() const;
+            void quickInvert();
+            void resize(const std::size_t _height, const std::size_t _width);
+            [[nodiscard]] bool checkIntegrity() const;
 
             void pointAt(const d3::Vectorf &_pos, const d3::Vectorf &_target, const d3::Vectorf &_vup);
         private:

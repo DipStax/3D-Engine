@@ -11,8 +11,9 @@ namespace Maths {
 
     template<typename T>
     Matrix<T>::Matrix(const std::size_t _height, const std::size_t _width)
-        : m_height(_height), m_width(_width)
-    {}
+    {
+        resize(_height, _width);
+    }
 
     template<typename T>
     void Matrix<T>::identity()
@@ -57,16 +58,26 @@ namespace Maths {
     }
 
     template<typename T>
-    bool Matrix<T>::resize(const std::size_t _height, const std::size_t _width)
+    void Matrix<T>::quickInvert()
     {
-        if (!checkIntegrity())
-            return false;
+        m_mtr[0][0] = m_mtr[0][0];    m_mtr[0][1] = m_mtr[1][0];    m_mtr[0][2] = m_mtr[2][0];    m_mtr[0][3] = 0.0f;
+        m_mtr[1][0] = m_mtr[0][1];    m_mtr[1][1] = m_mtr[1][1];    m_mtr[1][2] = m_mtr[2][1];    m_mtr[1][3] = 0.0f;
+        m_mtr[2][0] = m_mtr[0][2];    m_mtr[2][1] = m_mtr[1][2];    m_mtr[2][2] = m_mtr[2][2];    m_mtr[2][3] = 0.0f;
+        m_mtr[3][0] = -(m_mtr[3][0] * m_mtr[0][0] + m_mtr[3][1] * m_mtr[1][0] + m_mtr[3][2] * m_mtr[2][0]);
+        m_mtr[3][1] = -(m_mtr[3][0] * m_mtr[0][1] + m_mtr[3][1] * m_mtr[1][1] + m_mtr[3][2] * m_mtr[2][1]);
+        m_mtr[3][2] = -(m_mtr[3][0] * m_mtr[0][2] + m_mtr[3][1] * m_mtr[1][2] + m_mtr[3][2] * m_mtr[2][2]);
+        m_mtr[3][3] = 1.0f;
+    }
+
+    template<typename T>
+    void Matrix<T>::resize(const std::size_t _height, const std::size_t _width)
+    {
+
         m_mtr.resize(_height);
-        for (std::vector<T> vec : m_mtr)
+        for (std::vector<T> &vec : m_mtr)
             vec.resize(_width);
         m_height = _height;
         m_width = _width;
-        return true;
     }
 
     template<typename T>
@@ -107,11 +118,11 @@ Maths::Matrix<T> operator*(const Maths::Matrix<T> &_fst, const Maths::Matrix<T> 
         throw ("[Matrix::*]: can't multiply differente size of matrix");
     if (_fst.getHeight() != _fst.getWidth())
         throw ("[Matrix::*]: can't multiply non square matrix");
-    for (int x = 0; x < _fst.getHeight(); x++)
-        for (int y = 0; y < _fst.getHeight(); y++) {
-            mtr.m[y][x] = 0;
-            for (int it = 0; it < _fst.getWidth(); it++)
-                mtr.m[y][x] += _fst.at(y)[it] * _snd.at(0)[it];
+    for (std::size_t x = 0; x < _fst.getWidth(); x++)
+        for (std::size_t y = 0; y < _fst.getHeight(); y++) {
+            mtr[y][x] = 0;
+            for (std::size_t it = 0; it < _fst.getWidth(); it++)
+                mtr[y][x] += _fst.at(y)[it] * _snd.at(it)[x];
         }
     return mtr;
 }
@@ -121,7 +132,7 @@ d3::Vector<T> operator*(const Maths::Matrix<T> &_fst, const d3::Vector<T> &_snd)
 {
     d3::Vector<T> vec;
 
-    if (_fst.getHeight() != 3 || _fst.getWidth() != 3)
+    if (_fst.getHeight() != 4 || _fst.getWidth() != 4)
         throw ("[Matrix::*]: can't multiply not 4*4 matrix with vector");
     vec.x = _snd.x * _fst.at(0)[0] + _snd.y * _fst.at(1)[0] + _snd.z * _fst.at(2)[0] + _snd.w * _fst.at(3)[0];
     vec.y = _snd.x * _fst.at(0)[1] + _snd.y * _fst.at(1)[1] + _snd.z * _fst.at(2)[1] + _snd.w * _fst.at(3)[1];
