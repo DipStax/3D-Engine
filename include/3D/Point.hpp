@@ -18,6 +18,7 @@ namespace d3 {
             Point() = default;
             Point(const T &_x, const T &_y, const T &_z);
             Point(const Point<T> &_pt);
+
             virtual ~Point() = default;
 
             Point<T> &operator=(const Point<T> &_pt);
@@ -31,6 +32,7 @@ namespace d3 {
             T x = 0;
             T y = 0;
             T z = 0;
+            T w = 0;
     };
 
     using Pointf = Point<float>;

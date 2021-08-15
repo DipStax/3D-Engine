@@ -28,6 +28,7 @@ namespace d3 {
         x = _pt.x;
         y = _pt.y;
         z = _pt.z;
+        w = _pt.w;
         return *this;
     }
 
@@ -37,6 +38,7 @@ namespace d3 {
         x = _pt.x;
         y = _pt.y;
         z = _pt.z;
+        w = _pt.w;
     }
 
     template<typename T>
@@ -45,6 +47,7 @@ namespace d3 {
         x = _x;
         y = _y;
         z = _z;
+        w = 0;
     }
 
     template<typename T>
