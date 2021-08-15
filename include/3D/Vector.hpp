@@ -22,16 +22,18 @@ namespace d3 {
 
             virtual ~Vector() = default;
 
+            Vector<T> &operator=(const Vector<T> &_pt);
+
             [[nodiscard]] float lenght() const;
             [[nodiscard]] Vector<T> normalise() const;
 
             [[nodiscard]] Vector<T> crossProduct(const Vector<T> &_vec) const;
             [[nodiscard]] T dotProduct(const Vector<T> &_vec) const;
 
-            T w = 0;
             T x = 0;
             T y = 0;
             T z = 0;
+            T w = 0;
         private:
     };
 

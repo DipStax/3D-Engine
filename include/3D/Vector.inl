@@ -25,6 +25,7 @@ namespace d3 {
         x = _vec.x;
         y = _vec.y;
         z = _vec.z;
+        w = _vec.w;
     }
 
     template<typename T>
@@ -33,6 +34,17 @@ namespace d3 {
         x = _pt.x;
         y = _pt.y;
         z = _pt.z;
+        w = _pt.w;
+    }
+
+    template<typename T>
+    Vector<T> &Vector<T>::operator=(const Vector<T> &_pt)
+    {
+        x = _pt.x;
+        y = _pt.y;
+        z = _pt.z;
+        w = _pt.w;
+        return *this;
     }
 
     template<typename T>
