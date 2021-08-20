@@ -12,7 +12,8 @@ namespace Engine {
     D3Instance::D3Instance(const std::string &_title, const d2::Vectoru &_size)
         : m_size(static_cast<float>(_size.x), static_cast<float>(_size.y)), m_win({ _size.x, _size.y }, _title), m_world(4, 4), m_proj(4, 4)
     {
-        m_proj = Maths::matrixProjection(90, _size.y / _size.x, 0.1, 1000);
+        m_proj = Maths::matrixProjection(90, static_cast<float>(_size.y) / static_cast<float>(_size.x), 0.1, 1000);
+        std::cout << m_proj << std::endl;
     }
 
     D3Instance::~D3Instance()

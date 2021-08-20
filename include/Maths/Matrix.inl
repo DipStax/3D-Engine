@@ -134,9 +134,25 @@ d3::Vector<T> operator*(const Maths::Matrix<T> &_fst, const d3::Vector<T> &_snd)
 
     if (_fst.getHeight() != 4 || _fst.getWidth() != 4)
         throw ("[Matrix::*]: can't multiply not 4*4 matrix with vector");
-    vec.x = _snd.x * _fst.at(0)[0] + _snd.y * _fst.at(1)[0] + _snd.z * _fst.at(2)[0] + _snd.w * _fst.at(3)[0];
-    vec.y = _snd.x * _fst.at(0)[1] + _snd.y * _fst.at(1)[1] + _snd.z * _fst.at(2)[1] + _snd.w * _fst.at(3)[1];
-    vec.z = _snd.x * _fst.at(0)[2] + _snd.y * _fst.at(1)[2] + _snd.z * _fst.at(2)[2] + _snd.w * _fst.at(3)[2];
-    vec.w = _snd.x * _fst.at(0)[3] + _snd.y * _fst.at(1)[3] + _snd.z * _fst.at(2)[3] + _snd.w * _fst.at(3)[3];
+    vec.x = _snd.x * _fst.at(0)[0] + _snd.y * _fst.at(1)[0] + _snd.z * _fst.at(2)[0] + _fst.at(3)[0];
+    vec.y = _snd.x * _fst.at(0)[1] + _snd.y * _fst.at(1)[1] + _snd.z * _fst.at(2)[1] + _fst.at(3)[1];
+    vec.z = _snd.x * _fst.at(0)[2] + _snd.y * _fst.at(1)[2] + _snd.z * _fst.at(2)[2] + _fst.at(3)[2];
+    vec.w = _snd.x * _fst.at(0)[3] + _snd.y * _fst.at(1)[3] + _snd.z * _fst.at(2)[3] + _fst.at(3)[3];
+    if (vec.w != 0) {
+        vec.x /= vec.w;
+        vec.y /= vec.w;
+        vec.z /= vec.w;
+    }
     return vec;
+}
+
+template<typename T>
+std::ostream &operator<<(std::ostream &os, const Maths::Matrix<T> &_mtr)
+{
+    for (int y = 0; y < _mtr.getHeight(); y++) {
+        for (int x = 0; x < _mtr.getHeight(); x++)
+            os << "[" << _mtr.at(y).at(x) << "]\t";
+        os << std::endl;
+    }
+    return os;
 }

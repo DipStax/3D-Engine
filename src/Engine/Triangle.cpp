@@ -6,18 +6,17 @@
 */
 
 #include "Engine/Triangle.hpp"
+#include <iostream>
 
 namespace Engine {
 
     Triangle::Triangle(const d3::Pointf &_fst, const d3::Pointf &_snd, const d3::Pointf &_thd)
-        : m_vertex(sf::Triangles, 3)
     {
         m_pt[0] = _fst;
         m_pt[1] = _snd;
         m_pt[2] = _thd;
-        m_vertex[0].color = sf::Color::Red;
-        m_vertex[1].color = sf::Color::Blue;
-        m_vertex[2].color = sf::Color::Green;
+        for (int it = 0; it < 4; it++)
+            m_vertex[it].color = sf::Color::Black;
     }
 
     d3::Pointf Triangle::operator[](std::size_t _n)
@@ -41,10 +40,22 @@ namespace Engine {
         d3::Vectorf normal;
         d3::Vectorf ray;
 
-        for (int it = 0; it < 3; it++)
-            m_view_pt[it] = _world * d3::Vectorf(m_pt[it]);
+        std::cout << "- - - Transforme - - -" << std::endl;
+        for (int it = 0; it < 3; it++) {
+            std::cout << "[" << it <<  "] start:\t\t" << m_view_pt[it].x << " | " << m_view_pt[it].y << " | " << m_view_pt[it].z << " <> " << m_pt[it].x << " | " << m_pt[it].y << " | " << m_pt[it].z << std::endl;
+            m_view_pt[it] = _proj * d3::Vectorf(m_pt[it]);
+            std::cout << "[" << it <<  "] projection:\t\t" << m_view_pt[it].x << " | " << m_view_pt[it].y << " | " << m_view_pt[it].z << std::endl;
+            m_view_pt[it].x += 1;
+            m_view_pt[it].y += 1;
+            std::cout << "[" << it <<  "] add:\t\t" << m_view_pt[it].x << " | " << m_view_pt[it].y << " | " << m_view_pt[it].z << std::endl;
+            m_view_pt[it].x *= 0.5 * _size.x;
+            m_view_pt[it].y *= 0.5 * _size.y;
+            m_vertex[it].position = { m_view_pt[it].x - 100.f, m_view_pt[it].y - 200.f };
+            std::cout << "[" << it <<  "] end:\t\t" << m_view_pt[it].x << " | " << m_view_pt[it].y << " | " << m_view_pt[it].z << std::endl;
+        }
+        m_vertex[3].position = m_vertex[0].position;
 
-        normal = (m_view_pt[1] - m_view_pt[0]).crossProduct(m_view_pt[2] - m_view_pt[0]).normalise();
+        /*normal = (m_view_pt[1] - m_view_pt[0]).crossProduct(m_view_pt[2] - m_view_pt[0]).normalise();
         ray = m_view_pt[0] - _cam;
 
         m_visible = normal.dotProduct(ray) < 0.f;
@@ -65,13 +76,17 @@ namespace Engine {
             m_view_pt[it].x *= 0.5 * _size.x;
             m_view_pt[it].y *= 0.5 * _size.y;
             m_vertex[it].position = { m_view_pt[it].x, m_view_pt[it].y };
-        }
+        }*/
     }
 
     void Triangle::draw(sf::RenderTarget& _target, sf::RenderStates _states) const
     {
-        if (!m_visible)
-            return;
-        _target.draw(m_vertex, _states);
+        /*if (!m_visible)
+            return;*/
+        std::cout << "draw tri" << std::endl;
+        for (int it = 0; it < 4; it++) {
+            std::cout << "[" << it <<  "] end:\t\t" << m_vertex[it].position.x << " | " << m_vertex[it].position.y << std::endl;
+        }
+        _target.draw(m_vertex, 4, sf::LinesStrip, _states);
     }
 }

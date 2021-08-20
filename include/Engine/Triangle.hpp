@@ -32,6 +32,6 @@ namespace Engine {
             d3::Pointf m_pt[3];
             d3::Vectorf m_view_pt[3];
             bool m_visible = false;
-            sf::VertexArray m_vertex;
+            sf::Vertex m_vertex[4];
     };
 }

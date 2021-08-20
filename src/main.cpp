@@ -12,9 +12,10 @@ int main()
 {
     try {
         std::cout << "run" << std::endl;
-        Engine::D3Instance instance("test", { 300, 300 });
+        Engine::D3Instance instance("test", { 500, 400 });
         Engine::Camera cam({0, 5, 5});
         Engine::Mesh mesh;
+        std::string str;
 
         mesh.setModel(Engine::Mesh::Model::PYRAMID);
         while (instance.isOpen()) {
@@ -27,6 +28,7 @@ int main()
             std::cout << "< display" << std::endl;
             instance.display();
             std::cout << ">> new frame" << std::endl;
+            std::cin >> str;
         }
     } catch (const char *e) {
         std::cout << e << std::endl;

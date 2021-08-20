@@ -8,6 +8,7 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
 
 #include "3D/Vector.hpp"
 
@@ -28,6 +29,7 @@ namespace Maths {
             [[nodiscard]] std::size_t getHeight() const;
             [[nodiscard]] std::size_t getWidth() const;
 
+
             void quickInvert();
             void resize(const std::size_t _height, const std::size_t _width);
             [[nodiscard]] bool checkIntegrity() const;
@@ -44,5 +46,7 @@ template<typename T>
 Maths::Matrix<T> operator*(const Maths::Matrix<T> &_fst, const Maths::Matrix<T> &_snd);
 template<typename T>
 d3::Vector<T> operator*(const Maths::Matrix<T> &_fst, const d3::Vector<T> &_snd);
+template<typename T>
+std::ostream &operator<<(std::ostream &os, const Maths::Matrix<T> &_mtr);
 
 #include "Matrix.inl"

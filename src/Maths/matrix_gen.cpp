@@ -67,12 +67,12 @@ namespace Maths {
         Matrix<float> mtr(4, 4);
         float fovr = 1.f / tanf(_fov * 0.5f / 180.f * 3.14159f);
 
+        std::cout << "ar: " << _ar << std::endl;
         mtr[0][0] = _ar * fovr;
         mtr[1][1] = fovr;
         mtr[2][2] = _far / (_far - _near);
         mtr[3][2] = (-_far * _near) / (_far - _near);
         mtr[2][3] = 1;
-        mtr[3][3] = 0;
         return mtr;
     }
 }
