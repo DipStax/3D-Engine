@@ -58,11 +58,8 @@ namespace Engine {
 
     void Camera::calculate()
     {
-        d3::Vectorf target;
-
-        m_dir = Maths::matrixRotationY(0) * d3::Vectorf(m_target);
-        target = d3::Vectorf(m_pos) + m_dir;
-        m_mtr.pointAt(m_pos, target, m_vup);
+        m_dir = Maths::matrixRotationY(0.1) * d3::Vectorf(m_target);
+        m_mtr.pointAt(m_pos, d3::Vectorf(m_pos) + m_dir, m_vup);
         m_mtr.quickInvert();
     }
 }
