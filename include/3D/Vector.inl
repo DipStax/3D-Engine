@@ -163,3 +163,10 @@ d3::Vector<T> operator/(const d3::Vector<T> &_vec, const T &_n)
     vec.z = _vec.z / _n;
     return vec;
 }
+
+template<typename T>
+std::ostream &operator<<(std::ostream &os, const d3::Vector<T> &_vec)
+{
+    os << "[ " << _vec.x << ", " << _vec.y << ", " << _vec.z << " ]";
+    return os;
+}

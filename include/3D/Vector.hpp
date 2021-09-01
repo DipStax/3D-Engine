@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Point.hpp"
+#include <iostream>
 
 namespace d3 {
 
@@ -59,5 +60,9 @@ template<typename T>
 d3::Vector<T> operator/(const d3::Vector<T> &_fst, const d3::Vector<T> &_snd);
 template<typename T>
 d3::Vector<T> operator/(const d3::Vector<T> &_vec, const T &_n);
+
+template<typename T>
+std::ostream &operator<<(std::ostream &os, const d3::Vector<T> &_vec);
+
 
 #include "Vector.inl"
