@@ -39,29 +39,36 @@ namespace Engine {
 
     void Triangle::transform(const d2::Vectorf &_size, const d3::Vectorf &_cam, const Maths::Matrix<float> &_world, const Maths::Matrix<float> &_view, const Maths::Matrix<float> &_proj)
     {
-        d3::Vectorf normal;
-        d3::Vectorf ray;
         d3::Vectorf pt_tmp[3];
         Maths::Matrix<float> mx = Maths::matrixRotationX(0);
         Maths::Matrix<float> mz = Maths::matrixRotationZ(0);
 
-        for (int it = 0; it < 3; it++) {
+        for (int it = 0; it < 3; it++)
             pt_tmp[it] =  mx * (mz * d3::Vectorf(m_pt[it]));
-            pt_tmp[it].z += 3;
-        }
-        normal = d3::Vectorf(pt_tmp[1] - pt_tmp[0]).crossProduct(pt_tmp[2] - pt_tmp[0]).normalise();
-        if (normal.x * (pt_tmp[0].x - _cam.x) + normal.y * (pt_tmp[0].y - _cam.y)
-            + normal.z * (pt_tmp[0].z - _cam.z) < 0) {
+        m_normal = d3::Vectorf(pt_tmp[1] - pt_tmp[0]).crossProduct(pt_tmp[2] - pt_tmp[0]).normalise();
+        if (m_normal.x * (pt_tmp[0].x - _cam.x) + m_normal.y * (pt_tmp[0].y - _cam.y)
+            + m_normal.z * (pt_tmp[0].z - _cam.z) < 0) {
             for (int it = 0; it < 3; it++) {
                 m_view_pt[it] = _proj * (_view * d3::Vectorf(pt_tmp[it]));
                 m_view_pt[it].x = (m_view_pt[it].x + 1) * 0.5 * _size.x;
                 m_view_pt[it].y = (m_view_pt[it].y + 1) * 0.5 * _size.y;
                 m_vertex[it].position = { m_view_pt[it].x, m_view_pt[it].y};
             }
+            calculLight({0, 2, 2});
             m_visible = true;
         } else {
             m_visible = false;
         }
+    }
+
+    void Triangle::calculLight(const d3::Vectorf &_light)
+    {
+        float lightIntessity = 0;
+        d3::Vectorf light = _light.normalise();
+
+        lightIntessity = m_normal.dotProduct(light);
+        for (std::size_t it = 0; it < 3; it++)
+            m_vertex[it].color = sf::Color(255 * lightIntessity, 255 * lightIntessity, 255 * lightIntessity);
     }
 
     void Triangle::draw(sf::RenderTarget& _target, sf::RenderStates _states) const
