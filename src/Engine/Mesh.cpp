@@ -69,44 +69,30 @@ namespace Engine {
     {
         clear();
 
-        // front
-        m_tri.emplace_back(d3::Pointf{ 0, 0, 0 }, d3::Pointf{ 0, 1, 0 }, d3::Pointf{ 1, 0, 0 });
-        m_tri.emplace_back(d3::Pointf{ 1, 0, 0 }, d3::Pointf{ 0, 1, 0 }, d3::Pointf{ 1, 1, 0 });
-
-        // back
-        m_tri.emplace_back(d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 0, 1, 1 }, d3::Pointf{ 1, 0, 1 });
-        m_tri.emplace_back(d3::Pointf{ 1, 0, 1 }, d3::Pointf{ 0, 1, 1 }, d3::Pointf{ 1, 1, 1 });
-
-        // top
-        m_tri.emplace_back(d3::Pointf{ 0, 1, 0 }, d3::Pointf{ 1, 1, 0 }, d3::Pointf{ 0, 1, 1 });
+        m_tri.emplace_back(d3::Pointf{ 0, 0, 0 }, d3::Pointf{ 0, 1, 0 }, d3::Pointf{ 1, 1, 0 });
+        m_tri.emplace_back(d3::Pointf{ 0, 0, 0 }, d3::Pointf{ 1, 1, 0 }, d3::Pointf{ 1, 0, 0 });
+        m_tri.emplace_back(d3::Pointf{ 1, 0, 0 }, d3::Pointf{ 1, 1, 0 }, d3::Pointf{ 1, 1, 1 });
+        m_tri.emplace_back(d3::Pointf{ 1, 0, 0 }, d3::Pointf{ 1, 1, 1 }, d3::Pointf{ 1, 0, 1 });
+        m_tri.emplace_back(d3::Pointf{ 1, 0, 1 }, d3::Pointf{ 1, 1, 1 }, d3::Pointf{ 0, 1, 1 });
+        m_tri.emplace_back(d3::Pointf{ 1, 0, 1 }, d3::Pointf{ 0, 1, 1 }, d3::Pointf{ 0, 0, 1 });
+        m_tri.emplace_back(d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 0, 1, 1 }, d3::Pointf{ 0, 1, 0 });
+        m_tri.emplace_back(d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 0, 1, 0 }, d3::Pointf{ 0, 0, 0 });
         m_tri.emplace_back(d3::Pointf{ 0, 1, 0 }, d3::Pointf{ 0, 1, 1 }, d3::Pointf{ 1, 1, 1 });
-
-        // down
-        m_tri.emplace_back(d3::Pointf{ 0, 0, 0 }, d3::Pointf{ 1, 0, 0 }, d3::Pointf{ 0, 0, 1 });
-        m_tri.emplace_back(d3::Pointf{ 0, 0, 0 }, d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 1, 0, 1 });
-
-        // left
-        m_tri.emplace_back(d3::Pointf{ 0, 0, 0 }, d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 0, 1, 0 });
-        m_tri.emplace_back(d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 0, 1, 1 }, d3::Pointf{ 0, 0, 1 });
-
-        // right
-        m_tri.emplace_back(d3::Pointf{ 1, 0, 0 }, d3::Pointf{ 1, 0, 1 }, d3::Pointf{ 1, 1, 0 });
-        m_tri.emplace_back(d3::Pointf{ 1, 0, 1 }, d3::Pointf{ 1, 1, 1 }, d3::Pointf{ 1, 0, 1 });
+        m_tri.emplace_back(d3::Pointf{ 0, 1, 0 }, d3::Pointf{ 1, 1, 1 }, d3::Pointf{ 1, 1, 0 });
+        m_tri.emplace_back(d3::Pointf{ 1, 0, 1 }, d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 0, 0, 0 });
+        m_tri.emplace_back(d3::Pointf{ 1, 0, 1 }, d3::Pointf{ 0, 0, 0 }, d3::Pointf{ 1, 0, 0 });
     }
 
     void Mesh::pyramid()
     {
         clear();
 
-        // down
-        m_tri.emplace_back(d3::Pointf{ 0, 0, 0 }, d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 0, 1, 0 });
-        m_tri.emplace_back(d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 0, 1, 1 }, d3::Pointf{ 0, 1, 0 });
-
-        // top
-        m_tri.emplace_back(d3::Pointf{ 0, 0, 0 }, d3::Pointf{ 0.5, 1, 0.5 }, d3::Pointf{ 1, 0, 0 });
-        m_tri.emplace_back(d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 0.5, 1, 0.5 }, d3::Pointf{ 0, 0, 0 });
-        m_tri.emplace_back(d3::Pointf{ 1, 0, 1 }, d3::Pointf{ 0.5, 1, 0.5 }, d3::Pointf{ 0, 0, 1 });
-        m_tri.emplace_back(d3::Pointf{ 1, 0, 0 }, d3::Pointf{ 0.5, 1, 0.5 }, d3::Pointf{ 1, 0, 1 });
+        m_tri.emplace_back(d3::Pointf{ 1, 0, 1 }, d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 0, 0, 0 });
+        m_tri.emplace_back(d3::Pointf{ 1, 0, 1 }, d3::Pointf{ 0, 0, 0 }, d3::Pointf{ 1, 0, 0 });
+        m_tri.emplace_back(d3::Pointf{ 1, 0, 0 }, d3::Pointf{ 0.5, 1, 0.5 }, d3::Pointf{ 0, 0, 0 });
+        m_tri.emplace_back(d3::Pointf{ 0, 0, 0 }, d3::Pointf{ 0.5, 1, 0.5 }, d3::Pointf{ 0, 0, 1 });
+        m_tri.emplace_back(d3::Pointf{ 0, 0, 1 }, d3::Pointf{ 0.5, 1, 0.5 }, d3::Pointf{ 1, 0, 1 });
+        m_tri.emplace_back(d3::Pointf{ 1, 0, 1 }, d3::Pointf{ 0.5, 1, 0.5 }, d3::Pointf{ 1, 0, 0 });
     }
 
     void Mesh::draw(sf::RenderTarget& _target, sf::RenderStates _states) const
