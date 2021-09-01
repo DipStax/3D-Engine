@@ -12,6 +12,7 @@
 #include "3D/Point.hpp"
 #include "3D/Vector.hpp"
 #include "Maths/Matrix.hpp"
+#include "Maths/matrix_gen.hpp"
 
 namespace Engine {
 
@@ -32,6 +33,6 @@ namespace Engine {
             d3::Pointf m_pt[3];
             d3::Vectorf m_view_pt[3];
             bool m_visible = false;
-            sf::Vertex m_vertex[4];
+            sf::VertexArray m_vertex;
     };
 }

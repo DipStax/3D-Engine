@@ -11,12 +11,14 @@
 namespace Engine {
 
     Triangle::Triangle(const d3::Pointf &_fst, const d3::Pointf &_snd, const d3::Pointf &_thd)
+        : m_vertex(sf::Triangles, 3)
     {
         m_pt[0] = _fst;
         m_pt[1] = _snd;
         m_pt[2] = _thd;
-        for (int it = 0; it < 4; it++)
-            m_vertex[it].color = sf::Color::Black;
+        m_vertex[0].color = sf::Color::Red;
+        m_vertex[1].color = sf::Color::Blue;
+        m_vertex[2].color = sf::Color::Green;
     }
 
     d3::Pointf Triangle::operator[](std::size_t _n)
@@ -39,54 +41,33 @@ namespace Engine {
     {
         d3::Vectorf normal;
         d3::Vectorf ray;
+        d3::Vectorf pt_tmp[3];
+        Maths::Matrix<float> mx = Maths::matrixRotationX(0);
+        Maths::Matrix<float> mz = Maths::matrixRotationZ(0);
 
-        std::cout << "- - - Transforme - - -" << std::endl;
         for (int it = 0; it < 3; it++) {
-            std::cout << "[" << it <<  "] start:\t\t" << m_view_pt[it].x << " | " << m_view_pt[it].y << " | " << m_view_pt[it].z << " <> " << m_pt[it].x << " | " << m_pt[it].y << " | " << m_pt[it].z << std::endl;
-            m_view_pt[it] = _proj * d3::Vectorf(m_pt[it]);
-            std::cout << "[" << it <<  "] projection:\t\t" << m_view_pt[it].x << " | " << m_view_pt[it].y << " | " << m_view_pt[it].z << std::endl;
-            m_view_pt[it].x += 1;
-            m_view_pt[it].y += 1;
-            std::cout << "[" << it <<  "] add:\t\t" << m_view_pt[it].x << " | " << m_view_pt[it].y << " | " << m_view_pt[it].z << std::endl;
-            m_view_pt[it].x *= 0.5 * _size.x;
-            m_view_pt[it].y *= 0.5 * _size.y;
-            m_vertex[it].position = { m_view_pt[it].x - 100.f, m_view_pt[it].y - 200.f };
-            std::cout << "[" << it <<  "] end:\t\t" << m_view_pt[it].x << " | " << m_view_pt[it].y << " | " << m_view_pt[it].z << std::endl;
+            pt_tmp[it] =  mx * (mz * d3::Vectorf(m_pt[it]));
+            pt_tmp[it].z += 3;
         }
-        m_vertex[3].position = m_vertex[0].position;
-
-        /*normal = (m_view_pt[1] - m_view_pt[0]).crossProduct(m_view_pt[2] - m_view_pt[0]).normalise();
-        ray = m_view_pt[0] - _cam;
-
-        m_visible = normal.dotProduct(ray) < 0.f;
-        if (!m_visible)
-            return;
-        for (int it = 0; it < 3; it++)
-            m_view_pt[it] = _view * m_view_pt[it];
-
-        // error for clip check
-        m_visible = clip(d3::Vectorf(0, 0, 1), d3::Vectorf(0, 0, 1));
-        if (!m_visible)
-            return;
-        for (int it = 0; it < 3; it++) {
-            m_view_pt[it] = (_proj * m_view_pt[it]) / m_view_pt[it].w;
-            m_view_pt[it].x *= -1;
-            m_view_pt[it].y *= -1;
-            m_view_pt[it] = m_view_pt[it] + d3::Vectorf(1, 1, 0);
-            m_view_pt[it].x *= 0.5 * _size.x;
-            m_view_pt[it].y *= 0.5 * _size.y;
-            m_vertex[it].position = { m_view_pt[it].x, m_view_pt[it].y };
-        }*/
+        normal = d3::Vectorf(pt_tmp[1] - pt_tmp[0]).crossProduct(pt_tmp[2] - pt_tmp[0]).normalise();
+        if (normal.x * (pt_tmp[0].x - _cam.x) + normal.y * (pt_tmp[0].y - _cam.y)
+            + normal.z * (pt_tmp[0].z - _cam.z) < 0) {
+            for (int it = 0; it < 3; it++) {
+                m_view_pt[it] = _proj * (_view * d3::Vectorf(pt_tmp[it]));
+                m_view_pt[it].x = (m_view_pt[it].x + 1) * 0.5 * _size.x;
+                m_view_pt[it].y = (m_view_pt[it].y + 1) * 0.5 * _size.y;
+                m_vertex[it].position = { m_view_pt[it].x, m_view_pt[it].y};
+            }
+            m_visible = true;
+        } else {
+            m_visible = false;
+        }
     }
 
     void Triangle::draw(sf::RenderTarget& _target, sf::RenderStates _states) const
     {
-        /*if (!m_visible)
-            return;*/
-        std::cout << "draw tri" << std::endl;
-        for (int it = 0; it < 4; it++) {
-            std::cout << "[" << it <<  "] end:\t\t" << m_vertex[it].position.x << " | " << m_vertex[it].position.y << std::endl;
-        }
-        _target.draw(m_vertex, 4, sf::LinesStrip, _states);
+        if (!m_visible)
+            return;
+        _target.draw(m_vertex, _states);
     }
 }
